@@ -13,6 +13,7 @@
 ---
 values:
   pkg:
-    name: cortex-xdr-redhat
-  config: /etc/cortex-xdr.conf
+    name: 'cortex-agent'
+  config: '/etc/panw/cortex.conf'
 ...
+
