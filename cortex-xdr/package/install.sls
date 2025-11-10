@@ -78,7 +78,7 @@ Rename It:
 Set SELinux label on Cortex XDR Config-dir:
   cmd.run:
     - name: 'restorecon -Fvr {{ cortex_xdr.config_dir }}'
-    - on_change:
+    - onchanges:
       - file: 'Install Cortex XDR Config-file'
     - unless:
       - '[[ $( ls -lZd {{ cortex_xdr.config_dir }} ) =~ "system_u:" ]]'
