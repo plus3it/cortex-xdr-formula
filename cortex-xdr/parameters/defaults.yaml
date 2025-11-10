@@ -7,11 +7,13 @@ values:
   archive:
     source:
     source_hash:
+  package:
+    install_path: /opt/traps
   pkg:
-    name: cortex-xdr
+    name: cortex-agent
   rootgroup: root
   config: '/etc/panw'
   service:
-    name: cortex-xdr
-    unit_file:
+    name: traps_pmd
+    unit_file: /etc/systemd/system/traps_pmd.service
 ...
