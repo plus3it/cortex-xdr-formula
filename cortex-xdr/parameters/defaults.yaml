@@ -4,15 +4,14 @@
 # Set default values.
 ---
 values:
+  archive:
+    source:
+    source_hash:
   pkg:
     name: cortex-xdr
   rootgroup: root
-  config: '/etc/cortex-xdr'
+  config: '/etc/panw'
   service:
     name: cortex-xdr
-  subcomponent:
-    config: '/etc/cortex-xdr-subcomponent-formula.conf'
-  # Just here for testing
-  added_in_defaults: defaults_value
-  winner: defaults
+    unit_file:
 ...
