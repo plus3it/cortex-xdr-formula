@@ -9,21 +9,21 @@
 ## cortex-xdr: # Top-level pillar-key
 ##   lookup:
 
+## OS/Platform - Currently, only RHEL and derivatives are supported:
+##     enterprise_linux:
+
 ## Information about the installation-archive file
-##      archive:
+##       archive:
 
 ## Where to download archive-file from (Format: GZIPed TAR file)
-##        source:  https://<ARCHIVE_SERVER_FQDN>/<PATH_TO_ARCHIVE_FILE>
+##         source:  https://<ARCHIVE_SERVER_FQDN>/<PATH_TO_ARCHIVE_FILE>
 
 ## Where to download archive checksum-file from (Format: ASCII text-file)
-##        source_hash: https://<ARCHIVE_SERVER_FQDN>/<PATH_TO_ARCHIVE_FILE>.SHA256
+##         source_hash: https://<ARCHIVE_SERVER_FQDN>/<PATH_TO_ARCHIVE_FILE>.SHA256
 
 ## Name of the RPM contained within the installation-archive fileW
-##        rpm_name: cortex-8.9.0.137291.rpm
+##         rpm_name: cortex-8.9.0.137291.rpm
 
 ## The systemd service-unit name: this allows overriding the default,
 ## `traps_pmd.service` set in the .../parameters/defaults.yaml file
-##      service-name: traps_pmd.service
-
-./package/install.sls:{%- set cortex_pkg_name = salt.pillar.get('cortex-xdr:lookup:archive:rpm_name', 'cortex_xdr.pkg.name') %}
-
+##       service-name: traps_pmd.service
