@@ -64,6 +64,7 @@ Install Cortex XDR agent:
       - '{{ cortex_xdr.pkg.name }}': '{{ cortex_xdr.package.dearchive_path }}/cortex.rpm'
     - require:
       - file: 'Install Cortex XDR Config-file'
+      - cmd: 'Rename It'
 
 # This is an ugly kludge, but Saltstack's `pkg` state/method seems to hate
 # wildcarded package-file names
@@ -72,6 +73,7 @@ Rename It:
     - name: 'cd {{ cortex_xdr.package.dearchive_path }} && mv cortex-*.rpm cortex.rpm'
     - require:
       - archive: 'Cortex XDR Archive Extraction'
+    - stateful: False
 
 Set SELinux label on Cortex XDR Config-dir:
   cmd.run:
