@@ -61,7 +61,7 @@ Install Cortex XDR Config-file:
 Install Cortex XDR agent:
   pkg.installed:
     - sources:
-      - cortex-agent: '{{ cortex_xdr.package.dearchive_path }}/cortex.rpm'
+      - '{{ cortex_xdr.pkg.name }}': '{{ cortex_xdr.package.dearchive_path }}/cortex.rpm'
     - require:
       - file: 'Install Cortex XDR Config-file'
 
