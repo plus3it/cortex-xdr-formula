@@ -31,7 +31,7 @@ Cortex XDR Create Config-dir:
     - dir_mode: '0700'
     - file_mode: '0600'
     - group: 'root'
-    - name: '/etc/panw'
+    - name: '{{ cortex_xdr.config_dir }}'
     - recurse:
       - group
       - mode

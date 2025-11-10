@@ -12,7 +12,7 @@ values:
   pkg:
     name: cortex-agent
   rootgroup: root
-  config: '/etc/panw'
+  config_dir: '/etc/panw'
   service:
     name: traps_pmd
     unit_file: /etc/systemd/system/traps_pmd.service
