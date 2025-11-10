@@ -43,11 +43,7 @@ Cortex XDR Create Config-dir:
     - user: 'root'
 
 Set SELinux label on Cortex XDR Config-dir:
-  selinux.fcontext:
-    - name: '{{ cortex_xdr.config_dir }}'
-    - require:
-      - file: 'Cortex XDR Create Config-dir'
-    - sel_level: 's0'
-    - sel_role: 'object_r'
-    - sel_type: 'etc_t'
-    - sel_user: 'system_u'
+  cmd.run:
+    - name: 'restorecon -Fvr {{ cortex_xdr.config_dir }}'
+    - unless:
+      - '[[ $( ls -lZd {{ cortex_xdr.config_dir }} ) =~ "system_u:" ]]'
