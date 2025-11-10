@@ -16,4 +16,3 @@ values:
     name: 'cortex-agent'
   config: '/etc/panw/cortex.conf'
 ...
-

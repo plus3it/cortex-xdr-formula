@@ -5,8 +5,8 @@
 ---
 values:
   archive:
-    source:
-    source_hash:
+    source: ''
+    source_hash: ''
   package:
     dearchive_path: /tmp/config-xdr_unroll.d
   pkg:
