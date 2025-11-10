@@ -28,6 +28,14 @@ Cortex XDR Archive Extraction:
     - trim_output: True
     - user: 'root'
 
+# This is an ugly kludge, but Saltstack's `pkg` state/method seems to hate
+# wildcarded package-file names
+Rename It:
+  cmd.run:
+    - name: 'cd {{ cortex_xdr.package.dearchive_path }} && mv cortex-*.rpm cortex.rpm'
+    - require:
+      - archive: 'Cortex XDR Archive Extraction'
+
 Cortex XDR Create Config-dir:
   file.directory:
     - dir_mode: '0700'
@@ -62,7 +70,7 @@ Set SELinux label on Cortex XDR Config-dir:
 
 Install Cortex XDR agent:
   pkg.installed:
-    - pkgs:
-      - '{{ cortex_xdr.package.dearchive_path }}/cortex*.rpm'
+    - sources:
+      - cortex-agent: '{{ cortex_xdr.package.dearchive_path }}/cortex.rpm'
     - require:
       - file: 'Install Cortex XDR Config-file'
