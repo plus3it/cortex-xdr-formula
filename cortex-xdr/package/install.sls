@@ -25,3 +25,22 @@ Cortex XDR Archive Extraction:
     - source: '{{ cortex_source_archive }}'
     - trim_output: True
     - user: 'root'
+
+Cortex XDR Create Config-dir:
+  file.directory:
+    - dir_mode: '0700'
+    - file_mode: '0600'
+    - group: 'root'
+    - name: '/etc/panw'
+    - recurse:
+      - group
+      - mode
+      - user
+    - require:
+      - pkg: 'Cortex XDR Agent Dependencies'
+    - selinux:
+        serange: 's0'
+        serole: 'object_r'
+        setype: 'etc_t'
+        seuser: 'system_u'
+    - user: 'root'
