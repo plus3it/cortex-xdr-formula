@@ -1,44 +1,29 @@
+# Pillar variables used by cortex-xdr formula.
+#
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
----
-cortex-xdr:
-  lookup:
-    master: template-master
+#
+#################################################################
 
-  # Using bash package and udev service as an example. This allows us to
-  # test the template formula itself. You should set these parameters to
-  # examples that make sense in the contexto of the formula you're writing.
-  pkg:
-    name: bash
-  service:
-    name: systemd-journald
-  config: /etc/template-formula.conf
+## ---
+## cortex-xdr: # Top-level pillar-key
+##   lookup:
 
-  tofs:
-    # The files_switch key serves as a selector for alternative
-    # directories under the formula files directory. See TOFS pattern
-    # doc for more info.
-    # Note: Any value not evaluated by `config.get` will be used literally.
-    # This can be used to set custom paths, as many levels deep as required.
-    files_switch:
-      - any/path/can/be/used/here
-      - id
-      - roles
-      - osfinger
-      - os
-      - os_family
+## Information about the installation-archive file
+##      archive:
 
-    # All aspects of path/file resolution are customisable using the options below.
-    # This is unnecessary in most cases; there are sensible defaults.
-    # Default path: salt://< path_prefix >/< dirs.files >/< dirs.default >
-    # I.e.: salt://cortex-xdr/files/default
-    # path_prefix: template_alt
-    # dirs:
-    #   files: files_alt
-    #   default: default_alt
-    # The entries under `source_files` are prepended to the default source files
-    # given for the state
-    source_files:
-      cortex-xdr-config-file-file-managed:
-        - 'example_alt.tmpl'
-        - 'example_alt.tmpl.jinja'
+## Where to download archive-file from (Format: GZIPed TAR file)
+##        source:  https://<ARCHIVE_SERVER_FQDN>/<PATH_TO_ARCHIVE_FILE>
+
+## Where to download archive checksum-file from (Format: ASCII text-file)
+##        source_hash: https://<ARCHIVE_SERVER_FQDN>/<PATH_TO_ARCHIVE_FILE>.SHA256
+
+## Name of the RPM contained within the installation-archive fileW
+##        rpm_name: cortex-8.9.0.137291.rpm
+
+## The systemd service-unit name: this allows overriding the default,
+## `traps_pmd.service` set in the .../parameters/defaults.yaml file
+##      service-name: traps_pmd.service
+
+./package/install.sls:{%- set cortex_pkg_name = salt.pillar.get('cortex-xdr:lookup:archive:rpm_name', 'cortex_xdr.pkg.name') %}
+
