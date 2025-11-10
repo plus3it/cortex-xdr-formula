@@ -42,8 +42,17 @@ Cortex XDR Create Config-dir:
       - pkg: 'Cortex XDR Agent Dependencies'
     - user: 'root'
 
+Install Cortex XDR Config-file:
+  file.copy_:
+    - name: '{{ cortex_xdr.config_dir }}/cortex.conf'
+    - source: '{{ cortex_xdr.package.dearchive_path }}/cortex.conf'
+    - require:
+      - file: 'Cortex XDR Create Config-dir'
+
 Set SELinux label on Cortex XDR Config-dir:
   cmd.run:
     - name: 'restorecon -Fvr {{ cortex_xdr.config_dir }}'
+    - require:
+      - file: 'Install Cortex XDR Config-file'
     - unless:
       - '[[ $( ls -lZd {{ cortex_xdr.config_dir }} ) =~ "system_u:" ]]'
