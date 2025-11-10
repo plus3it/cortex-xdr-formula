@@ -4,25 +4,9 @@
 {#- Get the `tplroot` from `tpldir` #}
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- set sls_package_install = tplroot ~ '.package.install' %}
-{%- from tplroot ~ "/map.jinja" import mapdata as cortex__xdr with context %}
+{%- from tplroot ~ "/map.jinja" import mapdata as cortex_xdr with context %}
 {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
 
-include:
-  - {{ sls_package_install }}
-
-cortex-xdr-config-file-file-managed:
-  file.managed:
-    - name: {{ cortex__xdr.config }}
-    - source: {{ files_switch(['example.tmpl'],
-                              lookup='cortex-xdr-config-file-file-managed'
-                 )
-              }}
-    - mode: 644
-    - user: root
-    - group: {{ cortex__xdr.rootgroup }}
-    - makedirs: True
-    - template: jinja
-    - require:
-      - sls: {{ sls_package_install }}
-    - context:
-        cortex__xdr: {{ cortex__xdr | json }}
+# This file is part of the saltstack templates for new formulae. The Cortex
+# XDR archive-bundle includes a site-optimized configuration file. The
+# archive-bundle's inclusion of a config-file moots this SaltStack file.
