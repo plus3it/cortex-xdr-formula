@@ -10,7 +10,7 @@
 
 Cortex XDR Agent Dependencies:
   pkg.installed:
-    - name:
+    - pkgs:
       - policycoreutils-python
       - selinux-policy-devel
       - selinux-policy-targeted
