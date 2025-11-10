@@ -59,3 +59,10 @@ Set SELinux label on Cortex XDR Config-dir:
       - file: 'Install Cortex XDR Config-file'
     - unless:
       - '[[ $( ls -lZd {{ cortex_xdr.config_dir }} ) =~ "system_u:" ]]'
+
+Install Cortex XDR agent:
+  pkg.installed:
+    - pkgs:
+      - '{{ cortex_xdr.package.dearchive_path }}/cortex*.rpm'
+    - require:
+      - file: 'Install Cortex XDR Config-file'
