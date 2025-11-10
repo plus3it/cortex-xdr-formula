@@ -8,7 +8,7 @@ values:
     source:
     source_hash:
   package:
-    install_path: /opt/traps
+    dearchive_path: /tmp/config-xdr_unroll.d
   pkg:
     name: cortex-agent
   rootgroup: root
