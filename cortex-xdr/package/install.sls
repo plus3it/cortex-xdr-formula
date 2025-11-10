@@ -45,14 +45,17 @@ Cortex XDR Create Config-dir:
 Install Cortex XDR Config-file:
   file.copy:
     - name: '{{ cortex_xdr.config_dir }}/cortex.conf'
-    - source: '{{ cortex_xdr.package.dearchive_path }}/cortex.conf'
+    - group: 'root'
+    - mode: '0600'
     - require:
       - file: 'Cortex XDR Create Config-dir'
+    - source: '{{ cortex_xdr.package.dearchive_path }}/cortex.conf'
+    - user: 'root'
 
 Set SELinux label on Cortex XDR Config-dir:
   cmd.run:
     - name: 'restorecon -Fvr {{ cortex_xdr.config_dir }}'
-    - require:
+    - on_change:
       - file: 'Install Cortex XDR Config-file'
     - unless:
       - '[[ $( ls -lZd {{ cortex_xdr.config_dir }} ) =~ "system_u:" ]]'
