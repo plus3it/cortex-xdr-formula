@@ -38,9 +38,14 @@ Cortex XDR Create Config-dir:
       - user
     - require:
       - pkg: 'Cortex XDR Agent Dependencies'
-    - selinux:
-        serange: 's0'
-        serole: 'object_r'
-        setype: 'etc_t'
-        seuser: 'system_u'
     - user: 'root'
+
+Set SELinux label on Cortex XDR Config-dir:
+  selinux.fcontext:
+    - name: '{{ cortex_xdr.config_dir }}'
+    - require:
+      - file: 'Cortex XDR Create Config-dir'
+    - sel_level: 's0'
+    - sel_role: 'object_r'
+    - sel_type: 'etc_t'
+    - sel_user: 'system_u'
