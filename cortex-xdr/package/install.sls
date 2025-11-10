@@ -74,3 +74,9 @@ Install Cortex XDR agent:
       - cortex-agent: '{{ cortex_xdr.package.dearchive_path }}/cortex.rpm'
     - require:
       - file: 'Install Cortex XDR Config-file'
+
+Cleanup Cortex XDR Archive Extraction-location:
+  file.absent:
+    - name: '{{ cortex_xdr.package.dearchive_path }}'
+    - require:
+      - pkg: 'Install Cortex XDR agent'
