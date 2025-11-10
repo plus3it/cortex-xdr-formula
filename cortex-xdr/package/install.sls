@@ -45,7 +45,7 @@ Cortex XDR Create Config-dir:
       - mode
       - user
     - require:
-      - pkg: 'Cortex XDR Agent Dependencies'
+      - archive: 'Cortex XDR Archive Extraction'
     - user: 'root'
 
 Install Cortex XDR Config-file:
