@@ -8,6 +8,12 @@
 {%- set cortex_source_archive = salt.pillar.get('cortex-xdr:lookup:archive:source', '') %}
 {%- set cortex_source_hash = salt.pillar.get('cortex-xdr:lookup:archive:source_hash', '') %}
 
+Cleanup Cortex XDR Archive Extraction-location:
+  file.absent:
+    - name: '{{ cortex_xdr.package.dearchive_path }}'
+    - require:
+      - pkg: 'Install Cortex XDR agent'
+
 Cortex XDR Agent Dependencies:
   pkg.installed:
     - pkgs:
@@ -27,14 +33,6 @@ Cortex XDR Archive Extraction:
     - source: '{{ cortex_source_archive }}'
     - trim_output: True
     - user: 'root'
-
-# This is an ugly kludge, but Saltstack's `pkg` state/method seems to hate
-# wildcarded package-file names
-Rename It:
-  cmd.run:
-    - name: 'cd {{ cortex_xdr.package.dearchive_path }} && mv cortex-*.rpm cortex.rpm'
-    - require:
-      - archive: 'Cortex XDR Archive Extraction'
 
 Cortex XDR Create Config-dir:
   file.directory:
@@ -60,14 +58,6 @@ Install Cortex XDR Config-file:
     - source: '{{ cortex_xdr.package.dearchive_path }}/cortex.conf'
     - user: 'root'
 
-Set SELinux label on Cortex XDR Config-dir:
-  cmd.run:
-    - name: 'restorecon -Fvr {{ cortex_xdr.config_dir }}'
-    - on_change:
-      - file: 'Install Cortex XDR Config-file'
-    - unless:
-      - '[[ $( ls -lZd {{ cortex_xdr.config_dir }} ) =~ "system_u:" ]]'
-
 Install Cortex XDR agent:
   pkg.installed:
     - sources:
@@ -75,8 +65,18 @@ Install Cortex XDR agent:
     - require:
       - file: 'Install Cortex XDR Config-file'
 
-Cleanup Cortex XDR Archive Extraction-location:
-  file.absent:
-    - name: '{{ cortex_xdr.package.dearchive_path }}'
+# This is an ugly kludge, but Saltstack's `pkg` state/method seems to hate
+# wildcarded package-file names
+Rename It:
+  cmd.run:
+    - name: 'cd {{ cortex_xdr.package.dearchive_path }} && mv cortex-*.rpm cortex.rpm'
     - require:
-      - pkg: 'Install Cortex XDR agent'
+      - archive: 'Cortex XDR Archive Extraction'
+
+Set SELinux label on Cortex XDR Config-dir:
+  cmd.run:
+    - name: 'restorecon -Fvr {{ cortex_xdr.config_dir }}'
+    - on_change:
+      - file: 'Install Cortex XDR Config-file'
+    - unless:
+      - '[[ $( ls -lZd {{ cortex_xdr.config_dir }} ) =~ "system_u:" ]]'
