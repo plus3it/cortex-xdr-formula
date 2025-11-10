@@ -4,15 +4,16 @@
 # Set default values.
 ---
 values:
+  archive:
+    source: ''
+    source_hash: ''
+  package:
+    dearchive_path: /tmp/config-xdr_unroll.d
   pkg:
-    name: cortex-xdr
+    name: cortex-agent
   rootgroup: root
-  config: '/etc/cortex-xdr'
+  config_dir: '/etc/panw'
   service:
-    name: cortex-xdr
-  subcomponent:
-    config: '/etc/cortex-xdr-subcomponent-formula.conf'
-  # Just here for testing
-  added_in_defaults: defaults_value
-  winner: defaults
+    name: traps_pmd
+    unit_file: /etc/systemd/system/traps_pmd.service
 ...
