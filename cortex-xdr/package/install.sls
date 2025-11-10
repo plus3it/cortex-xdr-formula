@@ -4,7 +4,23 @@
 {#- Get the `tplroot` from `tpldir` #}
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import mapdata as cortex__xdr with context %}
+{%- set cortex_source_archive = salt.pillar.get('cortex-xdr:lookup:archive:source', '') %}
+{%- set cortex_source_hash = salt.pillar.get('cortex-xdr:lookup:archive:source_hash', '') %}
 
 Cortex XDR Agent Dependencies:
   pkg.installed:
     - name: selinux-policy-devel
+
+
+Cortex XDR Archive Extraction:
+  archive.extracted:
+    - enforce_toplevel: False
+    - group: 'root'
+    - keep_source: False
+    - name: '{{ cortex_xdr.package.install_path }}'
+    - require:
+      - pkg: 'Cortex XDR Agent Dependencies'
+    - source_hash: '{{ cortex_source_hash }}'
+    - source: '{{ cortex_source_archive }}'
+    - trim_output: True
+    - user: 'root'
