@@ -43,7 +43,7 @@ Cortex XDR Create Config-dir:
     - user: 'root'
 
 Install Cortex XDR Config-file:
-  file.copy_:
+  file.copy:
     - name: '{{ cortex_xdr.config_dir }}/cortex.conf'
     - source: '{{ cortex_xdr.package.dearchive_path }}/cortex.conf'
     - require:
