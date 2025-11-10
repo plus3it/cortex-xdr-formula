@@ -6,8 +6,11 @@
 {%- set sls_config_clean = tplroot ~ '.config.clean' %}
 {%- from tplroot ~ "/map.jinja" import mapdata as cortex_xdr with context %}
 
-Cleanup Cortex XDR Archive Extraction-location:
-  file.absent:
-    - name: '{{ cortex_xdr.package.dearchive_path }}'
+include:
+  - {{ sls_config_clean }}
+
+Remove Cortex XDR agent RPM:
+  pkg.removed:
+    - name: {{ cortex_xdr.pkg.name }}
     - require:
-      - pkg: 'Install Cortex XDR agent'
+      - sls: {{ sls_config_clean }}
