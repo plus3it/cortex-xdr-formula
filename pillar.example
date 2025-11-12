@@ -26,4 +26,4 @@
 
 ## The systemd service-unit name: this allows overriding the default,
 ## `traps_pmd.service` set in the .../parameters/defaults.yaml file
-##       service-name: traps_pmd.service
+##       service_name: traps_pmd.service
