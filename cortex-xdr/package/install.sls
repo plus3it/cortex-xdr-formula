@@ -65,6 +65,8 @@ Install Cortex XDR agent:
     - require:
       - file: 'Install Cortex XDR Config-file'
       - cmd: 'Rename It'
+      - cmd: 'Install Cortex XDR Agent Signing-Key'
+
 
 # This is an ugly kludge, but Saltstack's `pkg` state/method seems to hate
 # wildcarded package-file names
