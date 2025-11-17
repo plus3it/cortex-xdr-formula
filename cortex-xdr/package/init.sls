@@ -2,4 +2,5 @@
 # vim: ft=sls
 
 include:
+  - .rpm_validator_key
   - .install
