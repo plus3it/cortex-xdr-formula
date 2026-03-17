@@ -26,6 +26,8 @@ Install Cortex XDR Agent Signing-Key:
     - name: 'rpm --import {{ cortex_signing_key_path }}'
     - onchanges:
       - file: 'Get Cortex XDR Agent Signing-Key'
+    - onlyif:
+      - '[[ -s {{ cortex_signing_key_path }} ]]'
     - stateful: False
     - unless:
       - '[[ $( rpm -qia gpg-pubkey\* | grep -q ''Palo Alto XDR'' )$? -eq 0 ]]'
