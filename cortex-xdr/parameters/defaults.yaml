@@ -7,6 +7,7 @@ values:
   archive:
     source: ''
     source_hash: ''
+    pkg_signing_key: ''
   package:
     dearchive_path: /tmp/config-xdr_unroll.d
   pkg:

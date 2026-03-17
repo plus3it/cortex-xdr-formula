@@ -14,5 +14,6 @@
 values:
   pkg:
     name: 'cortex-agent'
+    pkg_signing_key: 'https://docs-cortex.paloaltonetworks.com/v/u/cortex-xdr-agent.zip'
   config: '/etc/panw/cortex.conf'
 ...
