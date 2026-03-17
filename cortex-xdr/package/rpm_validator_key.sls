@@ -11,11 +11,14 @@
 # vim: ft=sls
 #
 ######################################################################
+{#- Get the `tplroot` from `tpldir` #}
+{%- set tplroot = tpldir.split('/')[0] %}
+{%- from tplroot ~ "/map.jinja" import mapdata as cortex_xdr with context %}
 {%- set cortex_signing_key = salt.pillar.get('cortex-xdr:lookup:enterprise_linux:archive:signing_key', '') %}
 {%- set cortex_signing_key_hash = salt.pillar.get('cortex-xdr:lookup:enterprise_linux:archive:signing_key_hash', '') %}
 {%- set cortex_signing_key_path = '/tmp/cortex_xdr_signing_key.asc' %}
-{%- set cortex_pkg_signing_key = salt.pillar.get(
-    'cortex-xdr:lookup:enterprise_linux:pkg_signing_key',
+{%- set cortex_pkg_signing_key  = salt.pillar.get(
+    'cortex-xdr:lookup:enterprise_linux:archive:pkg_signing_key',
     cortex_xdr.pkg.pkg_signing_key
   )
 %}
