@@ -23,7 +23,7 @@
     cortex_xdr.pkg.pkg_signing_key
   )
 %}
-# Juju to suss-out redirect nonsense
+{# Juju to suss-out redirect nonsense #}
 {%- if cortex_pkg_signing_key.startswith(('http://', 'https://')) %}
   {%- set real_pkg_signing_key_url = salt['cmd.run']('curl -Ls -o /dev/null -w %{url_effective} ' ~ cortex_pkg_signing_key) %}
 {%- else %}
@@ -45,6 +45,14 @@
         {%- set local_file_name = '/tmp/cortex_signing.key' %}
     {%- endif %}
 {%- endif %}
+{# List of possible staged key-files to clean up before rebooting #}
+{%- set cortex_temp_files = [
+    '/tmp/cortex_key.asc',
+    '/tmp/cortex_pkg.zip',
+    '/tmp/cortex_signing.key'
+  ]
+%}
+
 
 Download signing-key blob:
   file.managed:
@@ -103,3 +111,12 @@ Import extracted signing-key:
       - '[[ -s /tmp/cortex_signing_key.d/cortex-xdr-agent.asc ]]'
     - unless:
       - '[[ $( rpm -qia gpg-pubkey\* | grep -q ''Palo Alto XDR'' )$? -eq 0 ]]'
+
+{%- for cortex_temp_file in cortex_temp_files %}
+Nuke the "{{ cortex_temp_file }}" temp-file:
+  file.absent:
+    - name: '{{ cortex_temp_file }}'
+    - require:
+      - cmd: 'Import extracted signing-key'
+{%- endfor %}
+
