@@ -19,5 +19,5 @@ Remove Cortex XDR agent RPM:
 Remove Cortex XDR agent RPM Verification-Key:
   cmd.script:
     - cwd: /root
-    - source: 'salt://{{ helper_script_loc }}/gpgkey_remove.sh}
+    - source: 'salt://{{ helper_script_loc }}/gpgkey_remove.sh'
     - stateful: True
