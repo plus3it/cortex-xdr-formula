@@ -99,8 +99,6 @@ Import raw signing-key:
 Import extracted signing-key:
   cmd.run:
     - name: 'rpm --import /tmp/cortex_signing_key.d/cortex-xdr-agent.asc'
-    - onchanges:
-      - archive: 'Extract signing-key from S3-hosted ZIP archive'
     - onlyif:
       - '[[ -s /tmp/cortex_signing_key.d/cortex-xdr-agent.asc ]]'
     - unless:
