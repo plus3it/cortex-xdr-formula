@@ -65,21 +65,13 @@ Extract signing-key from HTTP-hosted ZIP archive:
     - enforce_toplevel: False
     - group: root
     - name: '/tmp/cortex_signing_key.d'
+    - onchanges_in:
+      - cmd: 'Import extracted signing-key'
+    - onlyif:
+      - '[[ $( file /tmp/cortex_signing.key ) =~ "Zip archive data" ]]'
     - skip_verify: True
     - source: '{{ local_file_name }}'
     - user: root
-    - onlyif:
-      - '[[ $( file /tmp/cortex_signing.key ) =~ "Zip archive data" ]]'
-
-Import extracted signing-key:
-  cmd.run:
-    - name: 'rpm --import /tmp/cortex_signing_key.d/cortex-xdr-agent.asc'
-    - onchanges:
-      - archive: 'Extract signing-key from HTTP-hosted ZIP archive'
-    - onlyif:
-      - '[[ -s /tmp/cortex_signing_key.d/cortex-xdr-agent.asc ]]'
-    - unless:
-      - '[[ $( rpm -qia gpg-pubkey\* | grep -q ''Palo Alto XDR'' )$? -eq 0 ]]'
 {%- elif local_file_name.endswith('.zip') %}
 Extract signing-key from S3-hosted ZIP archive:
   archive.extracted:
@@ -87,11 +79,22 @@ Extract signing-key from S3-hosted ZIP archive:
     - enforce_toplevel: False
     - group: root
     - name: '/tmp/cortex_signing_key.d'
+    - onchanges_in:
+      - cmd: 'Import extracted signing-key'
+    - onlyif:
+      - '[[ $( file /tmp/cortex_signing.key ) =~ "Zip archive data" ]]'
     - skip_verify: True
     - source: '{{ local_file_name }}'
     - user: root
-    - onlyif:
-      - '[[ $( file /tmp/cortex_signing.key ) =~ "Zip archive data" ]]'
+{%- elif local_file_name.endswith('.asc') %}
+Import raw signing-key:
+  cmd.run:
+    - name: 'rpm --import {{ local_file_name }}'
+    - onchanges:
+      - file: 'Download signing-key blob'
+    - unless:
+      - '[[ $( rpm -qia gpg-pubkey\* | grep -q ''Palo Alto XDR'' )$? -eq 0 ]]'
+{%- endif %}
 
 Import extracted signing-key:
   cmd.run:
@@ -102,12 +105,3 @@ Import extracted signing-key:
       - '[[ -s /tmp/cortex_signing_key.d/cortex-xdr-agent.asc ]]'
     - unless:
       - '[[ $( rpm -qia gpg-pubkey\* | grep -q ''Palo Alto XDR'' )$? -eq 0 ]]'
-{%- elif local_file_name.endswith('.asc') %}
-Import extracted signing-key:
-  cmd.run:
-    - name: 'rpm --import {{ local_file_name }}'
-    - onchanges:
-      - file: 'Download signing-key blob'
-    - unless:
-      - '[[ $( rpm -qia gpg-pubkey\* | grep -q ''Palo Alto XDR'' )$? -eq 0 ]]'
-{%- endif %}
