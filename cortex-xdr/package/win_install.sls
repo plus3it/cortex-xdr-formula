@@ -11,12 +11,12 @@
 %}
 {%- set cortex_source_archive = salt.pillar.get(
     'cortex-xdr:lookup:windows_server:archive:source',
-    'cortex_xdr.pkg.source'
+    'cortex_xdr.archive.source'
   )
 %}
 {%- set cortex_source_hash = salt.pillar.get(
     'cortex-xdr:lookup:windows_server:archive:source_hash',
-    'cortex_xdr.pkg.source_hash'
+    'cortex_xdr.archive.source_hash'
   )
 %}
 
