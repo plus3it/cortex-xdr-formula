@@ -5,7 +5,7 @@
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import mapdata as cortex_xdr with context %}
 {%- set cortex_pkg_name = salt.pillar.get(
-    'cortex-xdr:lookup:windows_server:archive:pkg_name',
+    'cortex-xdr:lookup:windows_server:archive:msi_name',
     'cortex_xdr.pkg.name'
   )
 %}
@@ -20,11 +20,20 @@
   )
 %}
 
-Extract Cortex XDR Agent:
+Download and Extract Cortex XDR Agent:
   archive.extracted:
-    - name: 'C:\temp\cortex_xdr_extracted'
+    - name: '{{ cortex_xdr.package.dearchive_path }}'
     - source: '{{ cortex_source_archive }}'
     - source_hash: '{{ cortex_source_hash }}'
     - archive_format: zip
     - enforce_toplevel: False
     - overwrite: True
+
+Install Cortex XDR Agent:
+  pkg.installed:
+    - name: 'Cortex XDR Agent'
+    - sources:
+      - CortexXDR: '{{ cortex_xdr.package.dearchive_path }}\{{ cortex_pkg_name }}'
+    - extra_install_flags: '/qn /norestart'
+    - require:
+      - archive: 'Download and Extract Cortex XDR Agent'
