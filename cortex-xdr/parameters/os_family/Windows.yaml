@@ -14,5 +14,5 @@
 values:
   pkg:
     name: 'Cortex XDR Agent'
-    dearchive_path: 'C:\Windows\Temp\cortex_xdr_extracted'
+    dearchive_path: 'C:/Windows/Temp/cortex_xdr_extracted'
 ...
