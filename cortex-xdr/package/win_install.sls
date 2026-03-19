@@ -31,9 +31,9 @@ Download and Extract Cortex XDR Agent:
 
 Install Cortex XDR Agent:
   pkg.installed:
-    - name: '{{ cortex_xdr.pkg.name }}'
+    - name: 'Cortex XDR'
     - sources:
-      - '{{ cortex_xdr.pkg.name }}': '{{ cortex_xdr.pkg.dearchive_path }}/{{ cortex_pkg_name }}'
+      - 'Cortex XDR': '{{ cortex_xdr.pkg.dearchive_path }}/{{ cortex_pkg_name }}'
     - extra_install_flags: '/qn /norestart'
     - require:
       - archive: 'Download and Extract Cortex XDR Agent'
