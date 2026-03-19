@@ -8,6 +8,8 @@ values:
     source: ''
     source_hash: ''
     pkg_signing_key: ''
+    rpm_name: ''
+    msi_name: ''
   package:
     dearchive_path: /tmp/config-xdr_unroll.d
   pkg:
