@@ -20,8 +20,11 @@
   )
 %}
 
-Download Cortex XDR Agent archive-file:
-  file.managed:
-    - name: 'C:/Windows/TEMP/{{ cortex_pkg_name }}'
+Extract Cortex XDR Agent:
+  archive.extracted:
+    - name: 'C:\temp\cortex_xdr_extracted'
     - source: '{{ cortex_source_archive }}'
     - source_hash: '{{ cortex_source_hash }}'
+    - archive_format: zip
+    - enforce_toplevel: False
+    - overwrite: True
