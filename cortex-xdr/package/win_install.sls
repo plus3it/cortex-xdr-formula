@@ -22,7 +22,7 @@
 
 Download and Extract Cortex XDR Agent:
   archive.extracted:
-    - name: '{{ cortex_xdr.package.dearchive_path }}'
+    - name: '{{ cortex_xdr.pkg.dearchive_path }}'
     - source: '{{ cortex_source_archive }}'
     - source_hash: '{{ cortex_source_hash }}'
     - archive_format: zip
