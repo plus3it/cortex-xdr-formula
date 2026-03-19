@@ -10,7 +10,7 @@
 
 Cleanup Cortex XDR Archive Extraction-location:
   file.absent:
-    - name: '{{ cortex_xdr.package.dearchive_path }}'
+    - name: '{{ cortex_xdr.pkg.dearchive_path }}'
     - require:
       - pkg: 'Install Cortex XDR agent'
 
@@ -26,7 +26,7 @@ Cortex XDR Archive Extraction:
     - enforce_toplevel: False
     - group: 'root'
     - keep_source: False
-    - name: '{{ cortex_xdr.package.dearchive_path }}'
+    - name: '{{ cortex_xdr.pkg.dearchive_path }}'
     - require:
       - pkg: 'Cortex XDR Agent Dependencies'
     - source_hash: '{{ cortex_source_hash }}'
@@ -55,14 +55,14 @@ Install Cortex XDR Config-file:
     - mode: '0600'
     - require:
       - file: 'Cortex XDR Create Config-dir'
-    - source: '{{ cortex_xdr.package.dearchive_path }}/cortex.conf'
+    - source: '{{ cortex_xdr.pkg.dearchive_path }}/cortex.conf'
     - user: 'root'
 
 Install Cortex XDR agent:
   pkg.installed:
     - skip_verify: True
     - sources:
-      - '{{ cortex_xdr.pkg.name }}': '{{ cortex_xdr.package.dearchive_path }}/cortex.rpm'
+      - '{{ cortex_xdr.pkg.name }}': '{{ cortex_xdr.pkg.dearchive_path }}/cortex.rpm'
     - require:
       - file: 'Install Cortex XDR Config-file'
       - cmd: 'Rename It'
@@ -72,7 +72,7 @@ Install Cortex XDR agent:
 # wildcarded package-file names
 Rename It:
   cmd.run:
-    - name: 'cd {{ cortex_xdr.package.dearchive_path }} && mv cortex-*.rpm cortex.rpm'
+    - name: 'cd {{ cortex_xdr.pkg.dearchive_path }} && mv cortex-*.rpm cortex.rpm'
     - require:
       - archive: 'Cortex XDR Archive Extraction'
     - stateful: False
