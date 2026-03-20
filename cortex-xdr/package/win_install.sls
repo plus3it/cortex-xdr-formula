@@ -34,7 +34,7 @@ Install Cortex XDR Agent:
     - name: 'Cortex XDR 9.1.0.20768'
     - version: '9.1.0.20768'
     - sources:
-      - 'Cortex XDR 9.1.0.20768': "{{ (cortex_xdr.pkg.dearchive_path ~ '/' ~ cortex_pkg_name) | replace('/', '\\') }}"
+      - 'Cortex XDR 9.1.0.20768': '{{ (cortex_xdr.pkg.dearchive_path ~ "/" ~ cortex_pkg_name) | replace("/", "\\") }}'
     - extra_install_flags: '/qn /norestart'
     - require:
       - archive: 'Download and Extract Cortex XDR Agent'
