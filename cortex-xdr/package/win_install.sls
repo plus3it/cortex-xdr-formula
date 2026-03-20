@@ -19,6 +19,7 @@
     'cortex_xdr.archive.source_hash'
   )
 %}
+{%- set cortex_display_name = 'Cortex XDR 9.1.0.20768' %}
 
 Download and Extract Cortex XDR Agent:
   archive.extracted:
@@ -31,11 +32,10 @@ Download and Extract Cortex XDR Agent:
 
 Install Cortex XDR Agent:
   pkg.installed:
-    - name: 'Cortex XDR 9.1.0.20768'
+    - name: {{ cortex_display_name | json }}
     - version: '9.1.0.20768'
     - sources:
-      - 'Cortex XDR 9.1.0.20768': |
-          {{ (cortex_xdr.pkg.dearchive_path ~ '/' ~ cortex_pkg_name) | replace('/', '\\') }}
+      - {{ cortex_display_name | json }}: {{ (cortex_xdr.pkg.dearchive_path ~ '/' ~ cortex_pkg_name) | replace('/', '\\') }}
     - extra_install_flags: '/qn /norestart'
     - require:
       - archive: 'Download and Extract Cortex XDR Agent'
