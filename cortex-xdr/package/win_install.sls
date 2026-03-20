@@ -33,7 +33,6 @@ Download and Extract Cortex XDR Agent:
 Install Cortex XDR Agent:
   pkg.installed:
     - name: {{ cortex_display_name | json }}
-    - version: '9.1.0.20768'
     - sources:
       - {{ cortex_display_name | json }}: 'C:\Windows\Temp\cortex_xdr_extracted\Windows_Agent_Pkg-v91020768_x64.msi'
     - extra_install_flags: '/qn /norestart'
