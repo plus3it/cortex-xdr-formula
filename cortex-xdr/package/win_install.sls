@@ -21,18 +21,6 @@
 %}
 {%- set cortex_display_name = 'Cortex XDR 9.1.0.20768' %}
 
-Download and Extract Cortex XDR Agent:
-  archive.extracted:
-    - name: '{{ cortex_xdr.pkg.dearchive_path }}'
-    - source: '{{ cortex_source_archive }}'
-    - source_hash: '{{ cortex_source_hash }}'
-    - archive_format: zip
-    - enforce_toplevel: False
-    - overwrite: True
-
 Install Cortex XDR Agent:
   pkg.installed:
-    - name: 'cortex-xdr-pkg'
-    - version: '9.1.0.20768'
-    - require:
-      - archive: 'Download and Extract Cortex XDR Agent'
+    - name: 'cortex-agent'
