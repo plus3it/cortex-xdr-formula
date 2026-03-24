@@ -43,6 +43,11 @@
     {# API/Web Logic: No extension in URL, keyword search instead #}
     {%- if "download=" in real_pkg_signing_key_url|lower %}
         {%- set local_file_name = '/tmp/cortex_signing.key' %}
+    {%- elif ".asc" in real_pkg_signing_key_url|lower %}
+        {%- set local_file_name = '/tmp/cortex_key.asc' %}
+    {%- else %}
+        {# Default file-type assumption #}
+        {%- set local_file_name = '/tmp/cortex_pkg.zip' %}
     {%- endif %}
 {%- endif %}
 {# List of possible staged key-files to clean up before rebooting #}
