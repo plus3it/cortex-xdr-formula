@@ -3,7 +3,7 @@
 
 include:
 {%- if grains.kernel == "Linux" %}
-  - .lin_install
+  - cortex-xdr.package.lin_install
 {%- elif grains.kernel == "Windows" %}
-  - .win_install
+  - cortex-xdr.package.win_install
 {%- endif %}
