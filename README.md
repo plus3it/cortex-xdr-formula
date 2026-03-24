@@ -133,6 +133,7 @@ cortex-xdr:
 
 Once the Pillar contents are in place and the formula has been activated, the formula-contents may be executed through `watchmaker` by issuing a command like:
 
+**Linux:**
 ```bash
 # /usr/local/bin/watchmaker \
   --log-level debug \
@@ -140,8 +141,23 @@ Once the Pillar contents are in place and the formula has been activated, the fo
   -s cortex-xdr
 ```
 
+**Windows:**
+```
+$wamArgs = @(
+  "--log-level", "debug",
+  "--log-dir=C:\Watchmaker\Logs",
+  "-c", "C:/Watchmaker/TEMP/config.yaml",
+  "-s", "None",
+  "-n"
+)
+
+& watchmaker @wamArgs
+```
+The above makes use of splatting[^2] and the "call" operator, `&`[^3].
+
 It may also be equivalently-executed directly through Saltstack by executing something like:
 
+**Linux:**
 ```bash
 /usr/bin/salt-call \
   --local \
@@ -155,10 +171,32 @@ It may also be equivalently-executed directly through Saltstack by executing som
   --return local state.sls cortex-xdr
 ```
 
-The above is how `watchmaker` invokes it. This invocation method causes the formula's activities to be logged to the `/var/log/watchmaker/salt_call.debug.log` file.
+**Windows:**
+```
+$saltArgs = @(
+  "--local",
+  "--retcode-passthrough",
+  "--no-color",
+  "--config-dir", "C:\Watchmaker\Salt\conf",
+  "--log-file", "C:\Watchmaker\Logs\salt_call.debug.log",
+  "--log-file-level", "debug",
+  "--log-level", "error",
+  "--out", "quiet",
+  "--return",
+  "local",
+  "state.sls",
+  "cortex-xdr"
+)
+# Run all of the saltstack formulae
+& "C:\Program Files\Salt Project\Salt\salt-call.exe" @saltArgs
+```
+
+The above is how `watchmaker` invokes it. This invocation method causes the formula's activities to be logged to the `/var/log/watchmaker/salt_call.debug.log` file (Linux) or the `C:\Watchmaker\Logs\salt_call.debug.log` file (Windows).
 
 # Other Configuration/Execution
 
 If not using a watchmaker-based configuration-setup, more-generic, pure-Saltstack configuration and execution will be required. This method is outside the scope of this documentation.
 
 [^1]: The windows-based installer uses SaltStack's [winrepo](https://docs.saltproject.io/en/latest/topics/windows/windows-package-manager.html) capability. This formula expects that something like the [P3 watchmaker-salt-content](https://github.com/plus3it/watchmaker-salt-content) project will be used to properly set up the winrepo content.
+[^2]: "Splatting" can provide greater reliability when passing more-complex arguments via PowerShell
+[^3]: When invoking through powershell, it's recommended to prefix the command with the `&` "operator" (see: [Vendor DOcumentation](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_operators?view=powershell-7.5#call-operator-))
