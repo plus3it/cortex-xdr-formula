@@ -1,15 +1,25 @@
 cortex-xdr-formula
 ==================
 
-A SaltStack formula designed to install and configure the [Cortex XDR](https://docs-cortex.paloaltonetworks.com/p/XDR) client-agent (from [Palo Alto Networks](https://www.paloaltonetworks.com/)).
+A SaltStack formula designed to install and configure the [Cortex XDR](https://docs-cortex.paloaltonetworks.com/p/XDR) client-agent (from [Palo Alto Networks](https://www.paloaltonetworks.com/)) on hosts running an Enterprise Linux (Red Hat, CentOS, Alma, Rocky, etc) or Windows-based operating system.
+
+Note: it has only been end-to-end tested on:
+
+* Windows Server 2022
+* RHEL 9 derivatives (specifically Alma Linux 9.7)
 
 It is primarily expected that this formula will be run via [P3](https://www.plus3it.com/)'s "[watchmaker](https://watchmaker.readthedocs.io/en/stable/)" framework.
 
-This formula expects to install the Cortex XDR agent using a locally-created installation-archive file.  It is expected that the installation-archive will be a GZIP'ed, TAR-file.  This file will typically be created throught the Cortex XDR server and made available for install via:
+This formula expects to install the Cortex XDR agent using site-hosted installation files:
+* For Linux-based installation-targets, it is further expected that:
+    * The installation-RPM will be contained within a GZIP'ed, TAR-file. This file will typically be created throught the Cortex XDR server and made available for install via:
+    * The installation-RPM's signing-key will be hosted as a stand-alone file. This file may be a ZIP archive or a bare file (preferably with the file-type suffix `.asc`)
+* For Windows-based installation-targets, the installation file will need to be a MicroSoft Installer (MSI) file
 
-* Direct download from the Cortex XDR server
-* Download from an anonymous-fetch HTTP(S) URL
+These files may be downloaded from:
+* An anonymous-fetch HTTP(S) URL
 * S3 bucket accessible from installation-target EC2s
+* Any other S3-type hosting-source supported by Python's Boto3 module
 
 This formula's actions are configurable throug a SaltStack [pillar](https://docs.saltproject.io/en/latest/topics/tutorials/pillar.html).
 
@@ -28,6 +38,8 @@ Executes the `package` and `service` states to install and enable the Cortex XDR
 
 The `clean` state will remove all Cortex XDR agent components that are managed by this formula.
 
+This capability is only supported on Linux-based targets. Windows-based installations have "anti-tamper" features that prevent uninstallation.
+
 ### `cortex-xdr.package`
 
 The `package` state ensures the Cortex XDR agent software is installed.
@@ -38,16 +50,19 @@ The `service` state ensures the Cortex XDR agent service is running and enabled.
 
 ## Formula Activation
 
-When enabled through `watchmaker`, the formula-contents will typically be installed at `/srv/watchmaker/salt/formulas/cortex-xdr-formula`. These contents will then be _activated_ by inclusion in the `/opt/watchmaker/salt/minion` file's `file_roots:base:` configuration-stanza.
+When enabled through `watchmaker`, the formula-contents will typically be installed at `/srv/watchmaker/salt/formulas/cortex-xdr-formula` on Linux-based installation-targets and `"C:\Watchmaker\Salt\srv\Formulas\cortex-xdr-formula` on Windows-based installation-targets. These contents will then be _activated_ by inclusion in the SaltStack minion configuration-file's `file_roots:base:` configuration-stanza.
 
 
 ## Configuration via Pillar
 
-The only _required_ configuration settings are the archive source URL and its source hash, i.e. `package:archive:source` and `package:archive:source_hash`. Those are specific to the ForeScout server and the environment where this formula is used.
+Linux- and Windows-based installation-targets have different Pillar content-requirements:
 
-All other settings are optional. The formula sets reasonable, sane defaults for optional settings.
+* For Linux-base installation-targets, the only _required_ configuration settings are the archive source URL and its source hash, i.e. `package:archive:source` and `package:archive:source_hash`. Those Pillar-keys' values are specific to the environment where this formula is used.
+* For Windows-based installation-targets, no configuration settings are required[^1]
 
-All settings must be located in the Salt Pillar, within the `cortex-xdr:lookup` dictionary. When executed through watchmaker, the typical location for this file will be `/srv/watchmaker/salt/pillar/common/cortex-xdr/init.sls`
+All other settings (look through the project sls files for the string `salt.pillar.get`) are optional. The formula sets reasonable, sane defaults for optional settings.
+
+All settings must be located in the Salt Pillar, within the `cortex-xdr:lookup` dictionary. When executed through watchmaker, the typical location for this file will be `/srv/watchmaker/salt/pillar/common/cortex-xdr/init.sls` (Linux) or `C:\Watchmaker\Salt\srv\Pillar\common\cortex-xdr\init.sls` (Windows).
 
 Note: the `pillar.example` file in this project's root-directory contains basic infomation similar to that enumerated in the following sub-sections.
 
@@ -146,3 +161,4 @@ The above is how `watchmaker` invokes it. This invocation method causes the form
 
 If not using a watchmaker-based configuration-setup, more-generic, pure-Saltstack configuration and execution will be required. This method is outside the scope of this documentation.
 
+[^1]: The windows-based installer uses SaltStack's [winrepo](https://docs.saltproject.io/en/latest/topics/windows/windows-package-manager.html) capability. This formula expects that something like the [P3 watchmaker-salt-content](https://github.com/plus3it/watchmaker-salt-content) project will be used to properly set up the winrepo content.
