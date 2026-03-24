@@ -8,6 +8,10 @@
 {%- set cortex_source_archive = salt.pillar.get('cortex-xdr:lookup:enterprise_linux:archive:source', '') %}
 {%- set cortex_source_hash = salt.pillar.get('cortex-xdr:lookup:enterprise_linux:archive:source_hash', '') %}
 
+# Ensure RPM signing-key is present
+include:
+  - .rpm_validator_key
+
 Cleanup Cortex XDR Archive Extraction-location:
   file.absent:
     - name: '{{ cortex_xdr.pkg.dearchive_path }}'
