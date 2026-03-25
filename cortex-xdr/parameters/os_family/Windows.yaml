@@ -11,4 +11,9 @@
 # you can remove this file or provide at least an empty dict, e.g.
 # values: {}
 ---
+values:
+  pkg:
+    repo_name: 'cortex-agent'
+    repo_version: '9.1.0.20768'
 ...
+
