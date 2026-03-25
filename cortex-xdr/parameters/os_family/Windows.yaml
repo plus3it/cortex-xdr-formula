@@ -11,8 +11,4 @@
 # you can remove this file or provide at least an empty dict, e.g.
 # values: {}
 ---
-values:
-  pkg:
-    name: 'Cortex XDR Agent'
-    dearchive_path: 'C:/Windows/Temp/cortex_xdr_extracted'
 ...
