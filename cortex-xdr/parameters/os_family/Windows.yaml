@@ -15,10 +15,4 @@ values:
   pkg:
     repo_name: 'cortex-agent'
     repo_version: '9.1.0.20768'
-  cortex_svc_name_list:
-    - "cyserver"
-    - "cyvera"
-    - "cyvrfsfd"
-    - "cyvrmtld"
-    - "tedrdrv"
 ...
