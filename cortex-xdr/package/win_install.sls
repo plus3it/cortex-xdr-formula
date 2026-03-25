@@ -4,3 +4,4 @@
 Install Cortex XDR Agent:
   pkg.installed:
     - name: 'cortex-agent'
+    - allow_updates: True
