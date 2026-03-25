@@ -16,5 +16,6 @@
 
 Install Cortex XDR Agent:
   pkg.installed:
+    - allow_updates: True
     - name: '{{ cortex_winrepo_name }}'
     - version: '{{ cortex_target_version }}'
