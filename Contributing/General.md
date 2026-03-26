@@ -38,7 +38,7 @@ When reporting a bug please include:
 
 This project could always use more documentation, whether as part of the
 official project-docs, in programs' docstrings, SaltStack files' comments or
-embedded Jinja or even on the web in blog posts, articles, and the lik. The
+embedded Jinja or even on the web in blog posts, articles, and the like. The
 official documentation is maintained within this project in docstrings or (in
 the future) in the "docs" directory. Contributions are welcome, and are made
 the same way as any other code.
