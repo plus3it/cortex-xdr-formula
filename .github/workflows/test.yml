@@ -30,6 +30,7 @@ jobs:
         os_version:
           - windows-2019
           - windows-2022
+          - windows-2025
         salt_state:
           - cortex-xdr
         salt_pillar_root:
