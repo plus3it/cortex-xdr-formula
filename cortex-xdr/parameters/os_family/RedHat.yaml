@@ -13,7 +13,17 @@
 ---
 values:
   pkg:
+    dearchive_path: '/tmp/config-xdr_unroll.d'
     name: 'cortex-agent'
-    pkg_signing_key: 'https://docs-cortex.paloaltonetworks.com/v/u/cortex-xdr-agent.zip'
-  config: '/etc/panw/cortex.conf'
+    signing_key: 'https://docs-cortex.paloaltonetworks.com/v/u/cortex-xdr-agent.zip'
+    source: ''
+    source_hash: ''
+  config:
+    dir: '/etc/panw'
+    file: '/cortex.conf'
+    group: 'root'
+    owner: 'root'
+  service:
+    name: 'traps_pmd.service'
+    unit_file: '/etc/systemd/system/traps_pmd.service'
 ...

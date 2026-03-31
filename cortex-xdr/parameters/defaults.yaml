@@ -4,18 +4,18 @@
 # Set default values.
 ---
 values:
-  archive:
+  pkg:
+    dearchive_path: ''
+    name: ''
+    signing_key: ''
     source: ''
     source_hash: ''
-    pkg_signing_key: ''
-    rpm_name: ''
-    msi_name: ''
-  pkg:
-    dearchive_path: /tmp/config-xdr_unroll.d
-    name: cortex-agent
-  rootgroup: root
-  config_dir: '/etc/panw'
+  config:
+    dir: ''
+    file: ''
+    group: ''
+    owner: ''
   service:
-    name: traps_pmd
-    unit_file: /etc/systemd/system/traps_pmd.service
+    name: ''
+    unit_file: ''
 ...
