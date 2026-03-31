@@ -13,6 +13,6 @@
 ---
 values:
   pkg:
-    repo_name: 'cortex-agent'
-    repo_version: '9.1.0.20768'
+    name: 'cortex-agent'
+    version: '9.1.0.20768'
 ...
