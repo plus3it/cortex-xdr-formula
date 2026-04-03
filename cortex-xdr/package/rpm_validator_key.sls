@@ -21,7 +21,9 @@
 {%- set cortex_pkg_signing_key  = salt.pillar.get(
     'cortex-xdr:lookup:pkg:signing_key',
     cortex_xdr.pkg.signing_key
-  )
+{%- set cortex_signing_key = cortex_xdr.pkg.signing_key %}
+{%- set cortex_signing_key_hash = cortex_xdr.pkg.signing_key_hash %}
+{%- set cortex_signing_key_path = '/tmp/cortex_xdr_signing_key.asc' %}
 %}
 {# Juju to suss-out redirect nonsense #}
 {%- if cortex_pkg_signing_key.startswith(('http://', 'https://')) %}
