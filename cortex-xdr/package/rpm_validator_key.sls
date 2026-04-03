@@ -15,16 +15,10 @@
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import mapdata as cortex_xdr with context %}
 
-{%- set cortex_signing_key = salt.pillar.get('cortex-xdr:lookup:pkg:signing_key', '') %}
-{%- set cortex_signing_key_hash = salt.pillar.get('cortex-xdr:lookup:pkg:signing_key_hash', '') %}
-{%- set cortex_signing_key_path = '/tmp/cortex_xdr_signing_key.asc' %}
-{%- set cortex_pkg_signing_key  = salt.pillar.get(
-    'cortex-xdr:lookup:pkg:signing_key',
-    cortex_xdr.pkg.signing_key
+{%- set cortex_pkg_signing_key  = cortex_xdr.pkg.signing_key %}
 {%- set cortex_signing_key = cortex_xdr.pkg.signing_key %}
 {%- set cortex_signing_key_hash = cortex_xdr.pkg.signing_key_hash %}
 {%- set cortex_signing_key_path = '/tmp/cortex_xdr_signing_key.asc' %}
-%}
 {# Juju to suss-out redirect nonsense #}
 {%- if cortex_pkg_signing_key.startswith(('http://', 'https://')) %}
   {%- set real_pkg_signing_key_url = salt['cmd.run']('curl -Ls -o /dev/null -w %{url_effective} ' ~ cortex_pkg_signing_key) %}
