@@ -24,6 +24,9 @@
 ## Name of the RPM contained within the installation-archive fileW
 ##         rpm_name: cortex-8.9.0.137291.rpm
 
+## Location of the key used to sign the RPM (from 'rpm_name')
+##         pkg_signing_key: https://docs-cortex.paloaltonetworks.com/v/u/cortex-xdr-agent.zip
+
 ## The systemd service-unit name: this allows overriding the default,
 ## `traps_pmd.service` set in the .../parameters/defaults.yaml file
 ##       service_name: traps_pmd.service

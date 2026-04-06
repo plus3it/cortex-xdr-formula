@@ -21,4 +21,21 @@ jobs:
     with:
       salt-os-version: ${{ matrix.os_version }}
       salt-state: ${{ matrix.salt_state }}
+      salt-pillar-root: ${{ matrix.salt_pillar_root }}}
+
+  windows:
+    uses: plus3it/actions-workflows/.github/workflows/test-salt-windows.yml@3b8e48de2da8233d170c1d094932a562d9a36990
+    strategy:
+      matrix:
+        os_version:
+          - windows-2019
+          - windows-2022
+          - windows-2025
+        salt_state:
+          - cortex-xdr
+        salt_pillar_root:
+          - ./tests/pillar/test-cortex-xdr
+    with:
+      salt-os-version: ${{ matrix.os_version }}
+      salt-state: ${{ matrix.salt_state }}
       salt-pillar-root: ${{ matrix.salt_pillar_root }}
