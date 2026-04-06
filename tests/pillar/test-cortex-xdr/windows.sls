@@ -2,4 +2,4 @@ cortex-xdr:
   lookup:
     pkg:
       name: 'cortex-agent'
-      version: '9.1.0.20768'
+      version: '8.8.0.12050'
