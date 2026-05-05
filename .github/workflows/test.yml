@@ -8,7 +8,7 @@ concurrency:
 
 jobs:
   test:
-    uses: plus3it/actions-workflows/.github/workflows/test-salt-linux.yml@bd2c1ab25425e2e336d3e3604992cf4ec3c34080
+    uses: plus3it/actions-workflows/.github/workflows/test-salt-linux.yml@ddd67e99878a285f728de398c1116151c2d7791a
     strategy:
       matrix:
         os_version:
